@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnit.Middlewares", "NUnit.Middlewares\NUnit.Middlewares.csproj", "{2726FA5A-69A8-4F38-A09D-6C3150DCC565}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnit.Middlewares.Tests", "NUnit.Middlewares.Tests\NUnit.Middlewares.Tests.csproj", "{0695DF88-605F-401C-894D-24B40B9A71DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2726FA5A-69A8-4F38-A09D-6C3150DCC565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2726FA5A-69A8-4F38-A09D-6C3150DCC565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2726FA5A-69A8-4F38-A09D-6C3150DCC565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2726FA5A-69A8-4F38-A09D-6C3150DCC565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0695DF88-605F-401C-894D-24B40B9A71DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0695DF88-605F-401C-894D-24B40B9A71DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0695DF88-605F-401C-894D-24B40B9A71DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0695DF88-605F-401C-894D-24B40B9A71DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SkbKontur.NUnit.Middlewares</AssemblyName>
+    <RootNamespace>SkbKontur.NUnit.Middlewares</RootNamespace>
+    <PackageId>SkbKontur.NUnit.Middlewares</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0"/>
+  </ItemGroup>
+
+</Project>
