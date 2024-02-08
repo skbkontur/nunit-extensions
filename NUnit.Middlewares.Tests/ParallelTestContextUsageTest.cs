@@ -4,9 +4,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
-using SkbKontur.NUnit.Middlewares;
-
-namespace NUnit.Middlewares.Tests
+namespace SkbKontur.NUnit.Middlewares.Tests
 {
     public class Counter
     {
