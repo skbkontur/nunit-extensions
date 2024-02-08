@@ -19,10 +19,9 @@ namespace NUnit.Middlewares.Tests
     [TestFixture(-9)]
     [TestFixture(-10)]
     [TestFixtureSource(nameof(testCases))]
+    [Parallelizable(ParallelScope.Self)]
     public class ParallelParametrizedTestFixtureTest : SimpleTestBase
     {
-        private readonly int i;
-
         public ParallelParametrizedTestFixtureTest(int i)
         {
             this.i = i;
@@ -43,6 +42,8 @@ namespace NUnit.Middlewares.Tests
 
             counter.InvocationsCount.Should().Be(i);
         }
+
+        private readonly int i;
 
         private static readonly TestFixtureData[] testCases = Enumerable.Range(0, 100).Select(x => new TestFixtureData(x)).ToArray();
     }
