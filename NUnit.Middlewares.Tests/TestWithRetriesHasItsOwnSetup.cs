@@ -11,9 +11,6 @@ namespace SkbKontur.NUnit.Middlewares.Tests
     {
         public int InvocationsCount { get; set; }
 
-        private readonly object sync = new();
-        private bool disposed;
-
         public void Dispose()
         {
             if (!disposed)
@@ -30,6 +27,9 @@ namespace SkbKontur.NUnit.Middlewares.Tests
 
             throw new InvalidOperationException("Already disposed");
         }
+
+        private readonly object sync = new();
+        private bool disposed;
     }
 
     [Parallelizable(ParallelScope.Children)]
