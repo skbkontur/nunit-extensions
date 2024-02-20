@@ -1,4 +1,4 @@
-﻿namespace SkbKontur.NUnit.Middlewares
+namespace SkbKontur.NUnit.Middlewares
 {
     public interface ISetupBuilder
     {
