@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -34,6 +34,8 @@ namespace SkbKontur.NUnit.Middlewares
             return context.Get<T>(typeof(T).Name);
         }
 
+        // sivukhin: not all method which throws have OrThrow suffix
+        // Should we add it everywhere or maybe use another naming convention with pair of methods: Get / TryGet (or maybe even MustGet / TryGet)?
         public static T Get<T>(this SimpleTestContext context, string key)
         {
             return (T?)context.Get(key)
@@ -43,6 +45,7 @@ namespace SkbKontur.NUnit.Middlewares
         public static void Set<T>(this IPropertyBag properties, T value)
             where T : notnull
         {
+            // sivukhin: should we add unique prefix for the key name derived from type name in order to avoid possible clashes in the PropertyBag?
             properties.Set(typeof(T).Name, value);
         }
 
@@ -53,6 +56,7 @@ namespace SkbKontur.NUnit.Middlewares
         }
 
         public static object? GetRecursive(this ITest test, string key) =>
+            // sivukhin: (nit) static (p, k) => p.Get(k)?
             GetRecursive(test, key, (p, k) => p.Get(k));
 
         public static bool ContainsKeyRecursive(this ITest test, string key) =>

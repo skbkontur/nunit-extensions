@@ -1,9 +1,10 @@
-﻿using FluentAssertions;
+using FluentAssertions;
 
 using NUnit.Framework;
 
 namespace SkbKontur.NUnit.Middlewares.Tests
 {
+    // sivukhin: (nit) some descriptions for test meaning will be very helpful (could be comment or maybe meaningful name)
     [Parallelizable(ParallelScope.Self)]
     public class FirstTestFixtureSetUpTest : SimpleTestBase
     {
@@ -34,6 +35,7 @@ namespace SkbKontur.NUnit.Middlewares.Tests
         }
     }
 
+    // sivukhin: this test looks strange as it always overwrite "item3" property with fresh new Counter()
     [Parallelizable(ParallelScope.Children)]
     public class ThirdTestFixtureSetUpTest : SimpleTestBase
     {
