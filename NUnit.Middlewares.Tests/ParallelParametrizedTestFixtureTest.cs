@@ -29,7 +29,7 @@ namespace SkbKontur.NUnit.Middlewares.Tests
         {
             fixture
                 .UseSetup<TestInvocationCounterSetup>()
-                .Use(t => t.Get<Counter>().InvocationsCount += i);
+                .Use(t => t.GetFromThisOrParentContext<Counter>().InvocationsCount += i);
         }
 
         [Test]

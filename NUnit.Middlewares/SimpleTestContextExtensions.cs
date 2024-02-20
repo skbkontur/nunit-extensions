@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 
 using NUnit.Framework.Interfaces;
 
@@ -7,19 +8,36 @@ namespace SkbKontur.NUnit.Middlewares
 {
     public static class SimpleTestContextExtensions
     {
-        public static T? Get<T>(this IPropertyBag properties)
+        public static T Get<T>(this IPropertyBag properties)
         {
-            return (T)properties.Get(typeof(T).Name);
+            return properties.Get<T>(typeof(T).Name);
         }
 
-        public static T Get<T>(this ITest test)
+        public static T Get<T>(this IPropertyBag properties, string key)
         {
-            return (T?)test.Get(typeof(T).Name)!;
+            return (T?)properties.Get(key)
+                   ?? throw new KeyNotFoundException($"Cannot find item by key {key} in test properties");
+        }
+
+        public static T GetFromThisOrParentContext<T>(this ITest test)
+        {
+            return test.GetFromThisOrParentContext<T>(typeof(T).Name);
+        }
+
+        public static T GetFromThisOrParentContext<T>(this ITest test, string key)
+        {
+            return (T)test.GetRecursiveOrThrow(key);
         }
 
         public static T Get<T>(this SimpleTestContext context)
         {
-            return (T)context.Get(typeof(T).Name)!;
+            return context.Get<T>(typeof(T).Name);
+        }
+
+        public static T Get<T>(this SimpleTestContext context, string key)
+        {
+            return (T?)context.Get(key)
+                   ?? throw new KeyNotFoundException($"Cannot find item by key {key} in test context");
         }
 
         public static void Set<T>(this IPropertyBag properties, T value)
@@ -28,13 +46,19 @@ namespace SkbKontur.NUnit.Middlewares
             properties.Set(typeof(T).Name, value);
         }
 
-        public static object? Get(this ITest test, string key) =>
+        public static object GetRecursiveOrThrow(this ITest test, string key)
+        {
+            return test.GetRecursive(key)
+                   ?? throw new KeyNotFoundException($"Cannot find item by key {key} in test {test.Name} or its parents");
+        }
+
+        public static object? GetRecursive(this ITest test, string key) =>
             GetRecursive(test, key, (p, k) => p.Get(k));
 
-        public static bool ContainsKey(this ITest test, string key) =>
+        public static bool ContainsKeyRecursive(this ITest test, string key) =>
             GetRecursive(test, key, (p, k) => p.ContainsKey(k) ? true : (bool?)null) ?? false;
 
-        public static IList? List(this ITest test, string key) =>
+        public static IList? ListRecursive(this ITest test, string key) =>
             GetRecursive(test, key, (p, k) => p[k]);
 
         private static T? GetRecursive<T>(ITest leaf, string key, Func<IPropertyBag, string, T?> getValue)

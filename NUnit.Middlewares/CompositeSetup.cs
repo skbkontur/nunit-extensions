@@ -14,25 +14,28 @@ namespace SkbKontur.NUnit.Middlewares
             this.setups = setups;
         }
 
-        private const string successfulSetupsKey = "SuccessfulSetups";
+        private const string teardownKey = "nunit-middlewares.teardown-key";
 
         public async Task SetUpAsync(ITest test)
         {
+            // note (p.vostretsov, 20.02.2024): clear teardown list in order to support test retries
+            test.Properties[teardownKey] = new List<object>();
+
             foreach (var setup in setups)
             {
                 var teardown = await setup(test).ConfigureAwait(false);
-                test.Properties.Add(successfulSetupsKey, teardown);
+                test.Properties.Add(teardownKey, teardown);
             }
         }
 
         public async Task TearDownAsync(ITest test)
         {
             var exceptions = new List<Exception>();
-            for (var i = test.Properties[successfulSetupsKey].Count - 1; i >= 0; i--)
+            for (var i = test.Properties[teardownKey].Count - 1; i >= 0; i--)
             {
                 try
                 {
-                    var teardown = (TearDownAsync)test.Properties[successfulSetupsKey][i];
+                    var teardown = (TearDownAsync)test.Properties[teardownKey][i];
                     await teardown().ConfigureAwait(false);
                 }
                 catch (Exception e)

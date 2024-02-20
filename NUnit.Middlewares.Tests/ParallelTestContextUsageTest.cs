@@ -1,6 +1,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 
+using FluentAssertions;
+
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
@@ -69,10 +71,10 @@ namespace SkbKontur.NUnit.Middlewares.Tests
         private static void TestInvocationCount()
         {
             var counter = SimpleTestContext.Current.Get<Counter>();
-            Assert.That(counter, Is.Not.Null);
+            counter.Should().NotBeNull();
 
             counter.InvocationsCount++;
-            Assert.That(counter.InvocationsCount, Is.EqualTo(1));
+            counter.InvocationsCount.Should().Be(1);
         }
 
         private static readonly TestCaseData[] testCases = Enumerable.Range(0, 100).Select(x => new TestCaseData(x)).ToArray();
