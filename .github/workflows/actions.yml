@@ -23,14 +23,14 @@ jobs:
         run: dotnet build --configuration Release ./NUnit.Middlewares.sln
 
       - name: Check codestyle
-        run: dotnet jb cleanupcode NUnit.Middlewares.sln --profile=CatalogueCleanup --exclude=**/*.ts --verbosity=WARN && git diff --exit-code
+        run: dotnet jb cleanupcode NUnit.Middlewares.sln --profile=CatalogueCleanup --verbosity=WARN && git diff --exit-code
 
       - name: Run tests
         run: dotnet test --no-build --configuration Release ./NUnit.Middlewares.Tests/NUnit.Middlewares.Tests.csproj
   publish:
     runs-on: windows-2019
     needs: test
-    if: startsWith(github.event.ref, 'refs/tags/v')
+    if: github.ref_type == 'tag'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -41,28 +41,32 @@ jobs:
         with:
           global-json-file: global.json
 
-      - name: Build
-        run: dotnet build --configuration Release ./NUnit.Middlewares.sln
-
       - name: Check version
         run: |
           $ErrorActionPreference = "Stop"
           $tagName = "${{ github.ref_name }}"
-          $version = $tagName.Substring(1)
-          Write-Host "Will publish nuget package for $tagName tag" -ForegroundColor "Green"
-          if ($tagName -match '^v\d+\.\d+-release') # tag name starts with 'vX.Y-release' (e.g. use 'v4.2-release.1' tag for the first patch for release v4.2)
+
+          $regex = "^(?<name>((\w+)\.)*\w+)\@(?<version>(\d+\.\d+\.\d+)(?:-.+)?)$"
+          $match = [Regex]::Match($tagName, $regex).Groups
+          $packageName = $match["name"].Value
+          $version = $match["version"].Value
+          if ([string]::IsNullOrWhitespace($packageName) -or [string]::IsNullOrWhitespace($version))
           {
-            $version = $version.Substring(0, $version.IndexOf("-release"))
-            echo "SHOULD_CREATE_RELEASE=true" >> $env:GITHUB_ENV
-            Write-Host "Will create release for $tagName tag" -ForegroundColor "Green"
+            Write-Error "Cannot parse invalid tag $tagName"
           }
-          $matchVersion = Select-String -Path ./version.json -Pattern "`"version`": `"$version`""
-          if ($matchVersion -eq $null)
-          {
-            Write-Error "Version in tag ($version) does not match version in version.json"
-          }
+
+          $pre = $version.Contains("-")
+          $release = if ($pre) { "prerelease" } else { "release" }
+
+          Write-Host "Will create $release for package $packageName ($version)" -ForegroundColor "Green"
+
+          echo "RELEASE_NOTE=https://github.com/skbkontur/nunit-middlewares/releases/tag/$tagName" >> $env:GITHUB_ENV
+          echo "PACKAGE_NAME=$packageName" >> $env:GITHUB_ENV
+          echo "VERSION=$version" >> $env:GITHUB_ENV
+          echo "PRE=$pre" >> $env:GITHUB_ENV
+
       - name: Pack dotnet
-        run: dotnet pack --no-build --configuration Release ./NUnit.Middlewares.sln
+        run: dotnet pack --configuration Release ./$env:PACKAGE_NAME/$env:PACKAGE_NAME.csproj -p:Version=$env:VERSION -p:PackageReleaseNotes=$env:RELEASE_NOTE
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -77,9 +81,8 @@ jobs:
 
       - name: Create release
         uses: softprops/action-gh-release@v1
-        if: ${{ env.SHOULD_CREATE_RELEASE == 'true' }}
         with:
           fail_on_unmatched_files: true
           draft: false
-          prerelease: false
+          prerelease: ${{ env.PRE == 'True' }}
           files: "**/*.nupkg"

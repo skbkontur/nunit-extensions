@@ -14,12 +14,14 @@
 
     <!-- include pdbs into nuget package -->
     <PropertyGroup>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/skbkontur/nunit-middlewares</RepositoryUrl>
+        <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Nerdbank.GitVersioning" Version="3.6.133" PrivateAssets="All"/>
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
     </ItemGroup>
 
