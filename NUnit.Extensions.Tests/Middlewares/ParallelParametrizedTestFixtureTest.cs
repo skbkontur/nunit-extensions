@@ -4,7 +4,9 @@ using FluentAssertions;
 
 using NUnit.Framework;
 
-namespace SkbKontur.NUnit.Middlewares.Tests
+using SkbKontur.NUnit.Middlewares;
+
+namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
 {
     [TestFixture(-1)]
     [TestFixture(-2)]

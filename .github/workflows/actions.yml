@@ -17,16 +17,16 @@ jobs:
           global-json-file: global.json
 
       - name: Install dependencies
-        run: dotnet restore ./NUnit.Middlewares.sln --verbosity minimal && dotnet tool restore
+        run: dotnet restore ./nunit-extensions.sln --verbosity minimal && dotnet tool restore
 
       - name: Build
-        run: dotnet build --configuration Release ./NUnit.Middlewares.sln
+        run: dotnet build --configuration Release ./nunit-extensions.sln
 
       - name: Check codestyle
-        run: dotnet jb cleanupcode NUnit.Middlewares.sln --profile=CatalogueCleanup --verbosity=WARN && git diff --exit-code
+        run: dotnet jb cleanupcode nunit-extensions.sln --profile=CatalogueCleanup --verbosity=WARN && git diff --exit-code
 
       - name: Run tests
-        run: dotnet test --no-build --configuration Release ./NUnit.Middlewares.Tests/NUnit.Middlewares.Tests.csproj
+        run: dotnet test --no-build --configuration Release ./NUnit.Extensions.Tests/NUnit.Extensions.Tests.csproj
   publish:
     runs-on: windows-2019
     needs: test
@@ -60,7 +60,7 @@ jobs:
 
           Write-Host "Will create $release for package $packageName ($version)" -ForegroundColor "Green"
 
-          echo "RELEASE_NOTE=https://github.com/skbkontur/nunit-middlewares/releases/tag/$tagName" >> $env:GITHUB_ENV
+          echo "RELEASE_NOTE=https://github.com/skbkontur/nunit-extensions/releases/tag/$tagName" >> $env:GITHUB_ENV
           echo "PACKAGE_NAME=$packageName" >> $env:GITHUB_ENV
           echo "VERSION=$version" >> $env:GITHUB_ENV
           echo "PRE=$pre" >> $env:GITHUB_ENV

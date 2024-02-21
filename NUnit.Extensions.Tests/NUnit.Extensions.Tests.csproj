@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net8.0</TargetFrameworks>
-    <AssemblyName>SkbKontur.NUnit.Middlewares.Tests</AssemblyName>
-    <RootNamespace>SkbKontur.NUnit.Middlewares.Tests</RootNamespace>
+    <AssemblyName>SkbKontur.NUnit.Extensions.Tests</AssemblyName>
+    <RootNamespace>SkbKontur.NUnit.Extensions.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NUnit.Middlewares\NUnit.Middlewares.csproj" />
+    <ProjectReference Include="..\NUnit.Retries\NUnit.Retries.csproj" />
   </ItemGroup>
 
 </Project>

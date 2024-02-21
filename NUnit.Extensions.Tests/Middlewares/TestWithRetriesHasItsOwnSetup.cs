@@ -5,7 +5,9 @@ using FluentAssertions;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace SkbKontur.NUnit.Middlewares.Tests
+using SkbKontur.NUnit.Middlewares;
+
+namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
 {
     public class DisposableCounter : IDisposable
     {
