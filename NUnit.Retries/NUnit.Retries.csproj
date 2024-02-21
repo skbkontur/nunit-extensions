@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>SkbKontur.NUnit.Retries</AssemblyName>
+    <RootNamespace>SkbKontur.NUnit.Retries</RootNamespace>
+    <PackageId>SkbKontur.NUnit.Retries</PackageId>
+    <PackageDescription>Retries for NUnit</PackageDescription>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>NUnit Retry</PackageTags>
+    <Authors>Pavel Vostretsov</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.13.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

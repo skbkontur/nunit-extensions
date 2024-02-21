@@ -1,7 +1,7 @@
 # NUnit.Middlewares
 
 [![NuGet Status](https://img.shields.io/nuget/v/SkbKontur.NUnit.Middlewares.svg)](https://www.nuget.org/packages/SkbKontur.NUnit.Middlewares/)
-[![Build status](https://github.com/skbkontur/nunit-middlewares/actions/workflows/actions.yml/badge.svg)](https://github.com/skbkontur/nunit-middlewares/actions)
+[![Build status](https://github.com/skbkontur/nunit-extensions/actions/workflows/actions.yml/badge.svg)](https://github.com/skbkontur/nunit-extensions/actions)
 
 Use middleware pattern to write tests in concise and comprehensive manner. And ditch test bases.
 
@@ -9,13 +9,13 @@ Use middleware pattern to write tests in concise and comprehensive manner. And d
 
 Inspired by ASP.NET Core [middlewares](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware), the main idea of test middlewares can be summarized by this image:
 
-![nunit-middlewares](https://github.com/skbkontur/nunit-middlewares/assets/5417867/9707428f-11ec-4353-ac96-7fdf70200a47)
+![nunit-middlewares](https://github.com/skbkontur/nunit-extensions/assets/5417867/9707428f-11ec-4353-ac96-7fdf70200a47)
 
 Here we focus on *behaviours* that we want to add to our test rather than focusing on implementing test lifecycle methods provided by NUnit.
 
 `suite`, `fixture` and `test` in the image above are just `ISetupBuilder` that can accept either raw setup functions or anything that implements simple `ISetup` interface:
 
-![setup-builder](https://github.com/skbkontur/nunit-middlewares/assets/5417867/e4adb7c6-2078-401e-9bac-539f89ffec54)
+![setup-builder](https://github.com/skbkontur/nunit-extensions/assets/5417867/e4adb7c6-2078-401e-9bac-539f89ffec54)
 
 ## Simple test base
 
@@ -126,7 +126,7 @@ To ensure everything is working as intended, parent's *context item*s should be 
 
 In our example from first image, test context will look something like this:
 
-![test-context](https://github.com/skbkontur/nunit-middlewares/assets/5417867/c70b41d6-5f3f-485a-9e9d-7616b3797232)
+![test-context](https://github.com/skbkontur/nunit-extensions/assets/5417867/c70b41d6-5f3f-485a-9e9d-7616b3797232)
 
 Both `SimpleTestContext` and `GetFromThisOrParentContext` are just `ITest` wrappers that search for context value in `ITest`'s `Properties` recursively
 

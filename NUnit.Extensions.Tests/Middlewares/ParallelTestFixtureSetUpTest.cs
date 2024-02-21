@@ -2,7 +2,9 @@
 
 using NUnit.Framework;
 
-namespace SkbKontur.NUnit.Middlewares.Tests
+using SkbKontur.NUnit.Middlewares;
+
+namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
 {
     [Parallelizable(ParallelScope.Self)]
     public class FirstTestFixtureSetUpTest : SimpleTestBase
