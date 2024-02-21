@@ -1,22 +1,10 @@
 <Project>
 
-    <!-- https://github.com/dotnet/sdk/issues/1458 -->
-    <Target Name="_ResolveCopyLocalNuGetPackagePdbs" Condition="$(CopyLocalLockFileAssemblies) == true" AfterTargets="ResolveReferences">
-        <ItemGroup>
-            <ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->'%(RootDir)%(Directory)%(Filename).pdb')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != '' and Exists('%(RootDir)%(Directory)%(Filename).pdb')"/>
-        </ItemGroup>
-    </Target>
-
-    <Target Name="SetNuSpecProperties" BeforeTargets="GenerateNuspec" DependsOnTargets="GetBuildVersion">
-        <PropertyGroup>
-            <Authors>Pavel Vostretsov</Authors>
-            <PackageDescription>Middlewares for NUnit</PackageDescription>
-            <PackageTags>NUnit Middleware</PackageTags>
-            <RepositoryType>git</RepositoryType>
-            <RepositoryUrl>https://github.com/skbkontur/nunit-middlewares</RepositoryUrl>
-            <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
-            <PackageReleaseNotes>$(RepositoryUrl)/releases/tag/v$(MajorMinorVersion)-release</PackageReleaseNotes>
-        </PropertyGroup>
-    </Target>
+  <!-- https://github.com/dotnet/sdk/issues/1458 -->
+  <Target Name="_ResolveCopyLocalNuGetPackagePdbs" Condition="$(CopyLocalLockFileAssemblies) == true" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->'%(RootDir)%(Directory)%(Filename).pdb')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != '' and Exists('%(RootDir)%(Directory)%(Filename).pdb')"/>
+    </ItemGroup>
+  </Target>
 
 </Project>

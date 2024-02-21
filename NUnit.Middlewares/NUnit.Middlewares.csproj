@@ -5,10 +5,18 @@
     <AssemblyName>SkbKontur.NUnit.Middlewares</AssemblyName>
     <RootNamespace>SkbKontur.NUnit.Middlewares</RootNamespace>
     <PackageId>SkbKontur.NUnit.Middlewares</PackageId>
+    <PackageDescription>Middlewares for NUnit</PackageDescription>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>NUnit Middleware</PackageTags>
+    <Authors>Pavel Vostretsov</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" Version="3.12.0"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
