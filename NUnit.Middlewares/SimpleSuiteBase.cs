@@ -8,7 +8,7 @@ namespace SkbKontur.NUnit.Middlewares
     public abstract class SimpleSuiteBase
     {
         [OneTimeSetUp]
-        public Task OneTimeSetUp()
+        public Task _OneTimeSetUp()
         {
             var builder = new SetupBuilder();
 
@@ -20,7 +20,7 @@ namespace SkbKontur.NUnit.Middlewares
         }
 
         [OneTimeTearDown]
-        public Task OneTimeTearDown()
+        public Task _OneTimeTearDown()
         {
             return suiteSetup?.TearDownAsync(TestExecutionContext.CurrentContext.CurrentTest) ?? Task.CompletedTask;
         }

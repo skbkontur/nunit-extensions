@@ -8,7 +8,7 @@ namespace SkbKontur.NUnit.Middlewares
     public abstract class SimpleTestBase
     {
         [OneTimeSetUp]
-        public Task OneTimeSetUp()
+        public Task _OneTimeSetUp()
         {
             var fixture = new SetupBuilder();
             var test = new SetupBuilder();
@@ -22,19 +22,19 @@ namespace SkbKontur.NUnit.Middlewares
         }
 
         [OneTimeTearDown]
-        public Task OneTimeTearDown()
+        public Task _OneTimeTearDown()
         {
             return fixtureSetup?.TearDownAsync(TestExecutionContext.CurrentContext.CurrentTest) ?? Task.CompletedTask;
         }
 
         [SetUp]
-        public Task SetUp()
+        public Task _SetUp()
         {
             return testSetup?.SetUpAsync(TestExecutionContext.CurrentContext.CurrentTest) ?? Task.CompletedTask;
         }
 
         [TearDown]
-        public Task TearDown()
+        public Task _TearDown()
         {
             return testSetup?.TearDownAsync(TestExecutionContext.CurrentContext.CurrentTest) ?? Task.CompletedTask;
         }
