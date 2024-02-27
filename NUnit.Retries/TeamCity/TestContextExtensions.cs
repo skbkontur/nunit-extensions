@@ -73,19 +73,18 @@ namespace SkbKontur.NUnit.Retries.TeamCity
         private static Dictionary<string, string> GetTestProperties(ITest test)
         {
             var assembly = test.TypeInfo!.Assembly;
-            var suiteName = test.TypeInfo.Assembly.GetName().Name;
-            var testSource = assembly.Location;
-            var testId = Guid.NewGuid().ToString();
+            var suiteName = assembly.GetName().Name!;
 
             return new Dictionary<string, string>
                 {
                     ["name"] = $"{suiteName}: {test.FullName}",
                     ["captureStandardOutput"] = "false",
                     ["suiteName"] = suiteName,
-                    ["testSource"] = testSource,
+                    ["testSource"] = assembly.Location,
                     ["displayName"] = test.Name,
                     ["fullyQualifiedName"] = test.FullName,
-                    ["id"] = testId,
+                    ["id"] = Guid.NewGuid().ToString(),
+                    ["flowId"] = Guid.NewGuid().ToString(),
                 };
         }
     }
