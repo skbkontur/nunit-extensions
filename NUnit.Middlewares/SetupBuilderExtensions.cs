@@ -61,20 +61,20 @@ namespace SkbKontur.NUnit.Middlewares
                 });
         }
 
-        public static ISetupBuilder UseSetup(this ISetupBuilder builder, ISetup setup)
+        public static ISetupBuilder UseSetup<TSetup>(this ISetupBuilder builder, params object[] args)
+            where TSetup : ISetup
         {
             return builder.Use(async test =>
                 {
+                    var factory = test.TryGetFromThisOrParentContext<ISetupFactory>() ?? setupFactory;
+                    var setup = factory.Create(typeof(TSetup), args);
+
                     await setup.SetUpAsync(test).ConfigureAwait(false);
 
                     return () => setup.TearDownAsync(test);
                 });
         }
 
-        public static ISetupBuilder UseSetup<TSetup>(this ISetupBuilder builder)
-            where TSetup : ISetup, new()
-        {
-            return builder.UseSetup(new TSetup());
-        }
+        private static readonly ISetupFactory setupFactory = new SetupFactory();
     }
 }

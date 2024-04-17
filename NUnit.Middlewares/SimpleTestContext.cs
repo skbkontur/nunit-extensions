@@ -14,7 +14,7 @@ namespace SkbKontur.NUnit.Middlewares
 
         public static SimpleTestContext Current => new(TestExecutionContext.CurrentContext.CurrentTest);
 
-        public object? Get(string key) => test.GetRecursive(key);
+        public object? TryGet(string key) => test.TryGetRecursive(key);
         public bool ContainsKey(string key) => test.ContainsKeyRecursive(key);
         public IReadOnlyList<object>? this[string key] => (IReadOnlyList<object>?)test.ListRecursive(key);
 

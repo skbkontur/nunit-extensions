@@ -64,7 +64,7 @@ namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
         [TestCase(10)]
         public void Test(int n)
         {
-            var item3 = SimpleTestContext.Current.Get("item3");
+            var item3 = SimpleTestContext.Current.TryGet("item3");
             item3.Should().NotBeNull();
 
             ((Counter)item3!).InvocationsCount.Should().Be(0);
