@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using FluentAssertions;
 
 using NUnit.Framework;
+using NUnit.Framework.Internal.Execution;
 
 using SkbKontur.NUnit.Middlewares;
 
@@ -22,13 +24,21 @@ namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
     [Parallelizable(ParallelScope.Self)]
     public class ParallelParametrizedTestFixtureTest : SimpleTestBase
     {
-        public ParallelParametrizedTestFixtureTest(int i)
+        private event Action E;
+        private readonly int i1;
+        private int i2;
+        private const int i3 = 0;
+
+        public ParallelParametrizedTestFixtureTest(int i, int i2)
         {
             this.i = i;
+            this.i1 = 1;
+            E += () => {};
         }
 
         protected override void Configure(ISetupBuilder fixture, ISetupBuilder test)
         {
+            i2 = 3;
             fixture
                 .UseSetup<TestInvocationCounterSetup>()
                 .Use(t => t.GetFromThisOrParentContext<Counter>().InvocationsCount += i);
@@ -37,6 +47,10 @@ namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
         [Test]
         public void Test()
         {
+            E();
+            Console.WriteLine(i1);
+            Console.WriteLine(i2);
+            Console.WriteLine(i3);
             var counter = SimpleTestContext.Current.Get<Counter>();
             counter.Should().NotBeNull();
 

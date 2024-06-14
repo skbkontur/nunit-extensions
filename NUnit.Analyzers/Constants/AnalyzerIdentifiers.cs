@@ -1,0 +1,7 @@
+﻿namespace NUnit.Analyzers.Constants
+{
+    internal static class AnalyzerIdentifiers
+    {
+        internal const string TestFieldIsNotReadonly = "NU0001";
+    }
+}

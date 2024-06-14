@@ -17,8 +17,9 @@
     </PackageReference>
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
+    <ProjectReference Include="..\NUnit.Analyzers\NUnit.Analyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\NUnit.Middlewares\NUnit.Middlewares.csproj" />
     <ProjectReference Include="..\NUnit.Retries\NUnit.Retries.csproj" />
   </ItemGroup>
