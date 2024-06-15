@@ -1,6 +1,6 @@
-﻿namespace NUnit.Analyzers.TestFieldIsNotReadonly
+namespace NUnit.Analyzers.TestFieldIsNotReadonly
 {
-    internal class TestFieldIsNotReadonlyConstants
+    internal static class TestFieldIsNotReadonlyConstants
     {
         internal const string TestFieldIsNotReadonlyTitle = "The field in test class is not readonly";
         internal const string TestFieldIsNotReadonlyMessage = "Fields in test classes should be readonly";

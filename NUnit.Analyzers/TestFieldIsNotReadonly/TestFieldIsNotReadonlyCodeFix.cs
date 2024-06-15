@@ -1,8 +1,10 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
+using System.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,9 +13,12 @@ using NUnit.Analyzers.Constants;
 
 namespace NUnit.Analyzers.TestFieldIsNotReadonly
 {
+    [Shared]
     [ExportCodeFixProvider(LanguageNames.CSharp)]
     public class TestFieldIsNotReadonlyCodeFix : CodeFixProvider
     {
+        private const string makeTestFieldReadonly = "Make test field readonly";
+
         public override sealed FixAllProvider GetFixAllProvider()
         {
             return WellKnownFixAllProviders.BatchFixer;
@@ -37,7 +42,22 @@ namespace NUnit.Analyzers.TestFieldIsNotReadonly
             if (originalExpression.Modifiers.Any(IsReadonlyModifier))
                 return;
 
-            // var newExpression = originalExpression.WithModifiers(originalExpression.Modifiers.Add(Synra))
+            var readonlySyntax = SyntaxFactory.Token(
+                SyntaxTriviaList.Empty,
+                SyntaxKind.ReadOnlyKeyword,
+                SyntaxTriviaList.Create(SyntaxFactory.Whitespace(" ")));
+
+            var addedReadonlyModifier = originalExpression.Modifiers.Add(readonlySyntax);
+            var newExpression = originalExpression.WithModifiers(addedReadonlyModifier);
+
+            var newRoot = root.ReplaceNode(originalExpression, newExpression);
+
+            var codeAction = CodeAction.Create(
+                makeTestFieldReadonly,
+                _ => Task.FromResult(context.Document.WithSyntaxRoot(newRoot)),
+                makeTestFieldReadonly);
+
+            context.RegisterCodeFix(codeAction, context.Diagnostics);
         }
 
         private static bool IsReadonlyModifier(SyntaxToken syntaxToken) =>
