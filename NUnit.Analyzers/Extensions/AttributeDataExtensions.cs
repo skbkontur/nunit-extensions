@@ -2,9 +2,9 @@
 
 using Microsoft.CodeAnalysis;
 
-using NUnit.Analyzers.Constants;
+using SkbKontur.NUnit.Analyzers.Constants;
 
-namespace NUnit.Analyzers.Extensions
+namespace SkbKontur.NUnit.Analyzers.Extensions
 {
     public static class AttributeDataExtensions
     {

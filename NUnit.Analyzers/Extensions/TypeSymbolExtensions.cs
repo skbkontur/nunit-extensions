@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace NUnit.Analyzers.Extensions
+namespace SkbKontur.NUnit.Analyzers.Extensions
 {
     public static class TypeSymbolExtensions
     {

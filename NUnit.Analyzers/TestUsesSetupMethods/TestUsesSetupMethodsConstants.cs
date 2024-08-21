@@ -1,4 +1,4 @@
-﻿namespace NUnit.Analyzers.TestUsesSetupMethods
+﻿namespace SkbKontur.NUnit.Analyzers.TestUsesSetupMethods
 {
     internal class TestUsesSetupMethodsConstants
     {

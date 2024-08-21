@@ -9,9 +9,9 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-using NUnit.Analyzers.Constants;
+using SkbKontur.NUnit.Analyzers.Constants;
 
-namespace NUnit.Analyzers.TestFieldIsNotReadonly
+namespace SkbKontur.NUnit.Analyzers.TestFieldIsNotReadonly
 {
     [Shared]
     [ExportCodeFixProvider(LanguageNames.CSharp)]

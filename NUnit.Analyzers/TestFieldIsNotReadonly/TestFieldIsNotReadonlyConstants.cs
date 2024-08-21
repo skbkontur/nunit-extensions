@@ -1,4 +1,4 @@
-namespace NUnit.Analyzers.TestFieldIsNotReadonly
+namespace SkbKontur.NUnit.Analyzers.TestFieldIsNotReadonly
 {
     internal static class TestFieldIsNotReadonlyConstants
     {

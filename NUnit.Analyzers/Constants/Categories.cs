@@ -1,4 +1,4 @@
-﻿namespace NUnit.Analyzers.Constants
+﻿namespace SkbKontur.NUnit.Analyzers.Constants
 {
     internal static class Categories
     {

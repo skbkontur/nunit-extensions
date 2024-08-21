@@ -4,10 +4,10 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-using NUnit.Analyzers.Constants;
-using NUnit.Analyzers.Extensions;
+using SkbKontur.NUnit.Analyzers.Constants;
+using SkbKontur.NUnit.Analyzers.Extensions;
 
-namespace NUnit.Analyzers.TestUsesSetupMethods
+namespace SkbKontur.NUnit.Analyzers.TestUsesSetupMethods
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class TestUsesSetupMethodsAnalyzer : DiagnosticAnalyzer

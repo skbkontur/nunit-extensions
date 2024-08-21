@@ -2,7 +2,7 @@
 
 using Microsoft.CodeAnalysis;
 
-namespace NUnit.Analyzers.Extensions
+namespace SkbKontur.NUnit.Analyzers.Extensions
 {
     internal static class MethodSymbolExtensions
     {
