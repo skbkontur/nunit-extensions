@@ -88,7 +88,7 @@ namespace SkbKontur.NUnit.Extensions.Tests.Middlewares
                     {
                         t.Properties.Set("simple-counter", new DisposableCounter());
 
-                        return () => ((IDisposable)t.Properties.Get("simple-counter")).Dispose();
+                        return () => ((IDisposable)t.Properties.Get("simple-counter")!).Dispose();
                     });
         }
     }
