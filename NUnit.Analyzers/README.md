@@ -6,3 +6,4 @@
 Couple of nunit analyzers, helpful for parallel tests:
 - NU0001 Warning: TestFieldIsNotReadonly
 - NU0002 Warning: TestUsesSetupAttributes
+- NU0003 Warning: TestDeepInheritanceChain
