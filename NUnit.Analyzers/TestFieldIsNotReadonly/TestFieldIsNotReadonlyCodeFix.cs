@@ -36,6 +36,11 @@ namespace SkbKontur.NUnit.Analyzers.TestFieldIsNotReadonly
             context.CancellationToken.ThrowIfCancellationRequested();
 
             var node = root.FindNode(context.Span);
+            if (node is VariableDeclaratorSyntax {Parent: VariableDeclarationSyntax {Parent: FieldDeclarationSyntax field}})
+            {
+                node = field;
+            }
+
             if (node is not FieldDeclarationSyntax originalExpression)
                 return;
 
