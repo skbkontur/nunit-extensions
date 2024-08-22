@@ -15,5 +15,6 @@ See [CHANGELOG](CHANGELOG.md).
 
 ## Projects
 
+- [NUnit.Analyzers](NUnit.Analyzers)
 - [NUnit.Middlewares](NUnit.Middlewares)
 - [NUnit.Retries](NUnit.Retries)
