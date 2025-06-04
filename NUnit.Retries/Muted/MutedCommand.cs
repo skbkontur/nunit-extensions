@@ -24,17 +24,20 @@ namespace SkbKontur.NUnit.Retries.Muted
             }
             catch (Exception ex)
             {
-                if (strategy.ShouldBeMuted())
+                context.CurrentResult.RecordException(ex);
+            }
+
+            if (context.CurrentResult.ResultState == ResultState.Failure || context.CurrentResult.ResultState == ResultState.Error)
+            {
+                var validationError = strategy.GetMuteValidationError();
+                var testErrorPattern = $"Test error message:{context.CurrentResult.Message}, stackTrace: {context.CurrentResult.StackTrace}";
+                if (validationError == null)
                 {
-                    context.CurrentResult.SetResult(ResultState.Warning, $"[Muted] Reason: {strategy.Reason} — {ex.Message ?? ex.GetType().Name}");
-                }
-                else if (strategy.Error != null)
-                {
-                    context.CurrentResult.SetResult(ResultState.Error, strategy.Error);
+                    context.CurrentResult.SetResult(ResultState.Warning, $"[Muted] Reason: {strategy.Reason ?? "unspecified"}.\n{testErrorPattern}");
                 }
                 else
                 {
-                    context.CurrentResult.RecordException(ex);
+                    context.CurrentResult.SetResult(ResultState.Error, $"Validation error: {validationError}.\n{testErrorPattern}");
                 }
             }
 

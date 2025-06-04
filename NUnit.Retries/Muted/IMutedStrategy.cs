@@ -2,8 +2,7 @@
 {
     public interface IMutedStrategy
     {
-        public string Reason { get; }
-        public string? Error { get; }
-        bool ShouldBeMuted();
+        public string? Reason { get; }
+        string? GetMuteValidationError();
     }
 }

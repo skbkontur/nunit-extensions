@@ -11,32 +11,29 @@ namespace SkbKontur.NUnit.Retries.Muted
             MaxDays = maxDays;
         }
 
-        public bool ShouldBeMuted()
+        public string? GetMuteValidationError()
         {
-            Error = null;
-                
             if (!DateTime.TryParse(Until, out var parsed))
             {
-                Error = $"Invalid 'until' format: {Until}";
-                return false;
+                return $"Invalid 'until' format: {Until}";
             }
 
-            if (DateTime.UtcNow > parsed)
+            var now = DateTime.UtcNow;
+
+            if (parsed < now)
             {
-                return false;
-            }
-            
-            if ((parsed - DateTime.UtcNow).TotalDays > MaxDays)
-            {
-                Error = $"Muted until {parsed:u} exceeds max allowed period of {MaxDays} days.";
-                return false;
+                return $"Muted until {parsed:u} is already in the past.";
             }
 
-            return true;
+            if ((parsed - now).TotalDays > MaxDays)
+            {
+                return $"Muted until {parsed:u} exceeds max allowed period of {MaxDays} days.";
+            }
+
+            return null;
         }
 
         public string Reason { get; }
-        public string? Error { get; private set; }
         private string Until { get; }
         private int MaxDays { get; }
     }
