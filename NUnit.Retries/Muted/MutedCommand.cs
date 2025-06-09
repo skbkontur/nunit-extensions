@@ -18,7 +18,6 @@ namespace SkbKontur.NUnit.Retries.Muted
 
         public override TestResult Execute(TestExecutionContext context)
         {
-            context.CurrentResult = context.CurrentTest.MakeTestResult();
             if (until < DateTime.UtcNow)
             {
                 TestContext.Progress.WriteLine($"Muted until {until:u} is already in the past");
@@ -31,6 +30,7 @@ namespace SkbKontur.NUnit.Retries.Muted
             }
             catch (Exception ex)
             {
+                context.CurrentResult ??= context.CurrentTest.MakeTestResult();
                 context.CurrentResult.RecordException(ex);
             }
 
