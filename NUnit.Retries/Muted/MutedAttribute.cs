@@ -11,15 +11,24 @@ namespace SkbKontur.NUnit.Retries.Muted
         public MutedAttribute(string reason, string until)
         {
             this.reason = reason;
-            this.until = until;
+            if (!DateTime.TryParse(until, out this.until))
+            {
+                throw new ArgumentException($"Invalid 'until' format: {until}");
+            }
+
+            const int maxDays = 30;
+            if ((this.until - DateTime.UtcNow).TotalDays > maxDays)
+            {
+                throw new ArgumentException($"Muted until {this.until:u} exceeds max allowed period of {maxDays} days.");
+            }
         }
 
         public TestCommand Wrap(TestCommand command)
         {
-            return new MutedCommand(command, reason, until, 30);
+            return new MutedCommand(command, reason, until);
         }
 
         private readonly string reason;
-        private readonly string until;
+        private readonly DateTime until;
     }
 }
