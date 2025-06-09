@@ -10,19 +10,16 @@ namespace SkbKontur.NUnit.Retries.Muted
     {
         public MutedAttribute(string reason, string until)
         {
-            strategy = new MutedStrategy(reason, until);
-        }
-
-        public MutedAttribute(IMutedStrategy strategy)
-        {
-            this.strategy = strategy;
+            this.reason = reason;
+            this.until = until;
         }
 
         public TestCommand Wrap(TestCommand command)
         {
-            return new MutedCommand(command, strategy);
+            return new MutedCommand(command, reason, until, 30);
         }
 
-        private readonly IMutedStrategy strategy;
+        private readonly string reason;
+        private readonly string until;
     }
 }
