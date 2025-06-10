@@ -7,12 +7,12 @@ jobs:
   test:
     runs-on: windows-2019
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
@@ -32,12 +32,12 @@ jobs:
     needs: test
     if: github.ref_type == 'tag'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
@@ -69,7 +69,7 @@ jobs:
         run: dotnet pack --configuration Release ./$env:PACKAGE_NAME/$env:PACKAGE_NAME.csproj -p:Version=$env:VERSION -p:PackageReleaseNotes=$env:RELEASE_NOTE
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: "**/*.nupkg"
           if-no-files-found: error
