@@ -10,6 +10,7 @@ namespace SkbKontur.NUnit.Retries.Common
             TeamCity,
             Unknown
         }
+
         public static CiService GetCurrentService()
         {
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION")))
@@ -26,11 +27,11 @@ namespace SkbKontur.NUnit.Retries.Common
         public static string GetMessageStartConstants(this CiService service)
         {
             return service switch
-            {
-                CiService.Gitlab => "##gitlab[",
-                CiService.TeamCity => "#teamcity[",
-                _ => throw new NotSupportedException("Not supported")
-            };
+                {
+                    CiService.Gitlab => "##gitlab[",
+                    CiService.TeamCity => "#teamcity[",
+                    _ => throw new NotSupportedException("Not supported")
+                };
         }
     }
 }

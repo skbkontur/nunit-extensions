@@ -2,7 +2,7 @@
 {
     public static class ServiceMessageConstants
     {
-        public static string ServiceMessageOpen = CiServiceExtensions.GetCurrentService().GetMessageStartConstants();
         public const string ServiceMessageClose = "]";
+        public static string ServiceMessageOpen = CiServiceExtensions.GetCurrentService().GetMessageStartConstants();
     }
 }

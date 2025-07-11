@@ -2,6 +2,7 @@
 
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
+
 using SkbKontur.NUnit.Retries.Common;
 
 namespace SkbKontur.NUnit.Retries.TeamCity
