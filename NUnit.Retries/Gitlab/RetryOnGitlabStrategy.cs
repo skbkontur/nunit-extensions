@@ -17,7 +17,7 @@ namespace SkbKontur.NUnit.Retries.Gitlab
 
         public bool ShouldRetry(TestResult result)
         {
-            return TestContextExtensions.IsOnGitlab() &&
+            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab &&
                    (result.ResultState == ResultState.Failure ||
                     result.ResultState == ResultState.Error);
         }

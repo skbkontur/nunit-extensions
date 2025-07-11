@@ -26,7 +26,7 @@ namespace SkbKontur.NUnit.Retries.Common
             }
 
             var sb = new StringBuilder();
-            sb.Append(ServiceMessageConstants.ServiceMessageOpen());
+            sb.Append(ServiceMessageConstants.ServiceMessageOpen);
             sb.Append(messageName);
 
             foreach (var property in properties)

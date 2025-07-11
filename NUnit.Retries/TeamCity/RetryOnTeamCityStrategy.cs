@@ -17,7 +17,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
 
         public bool ShouldRetry(TestResult result)
         {
-            return TestContextExtensions.IsOnTeamCity() &&
+            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity &&
                    (result.ResultState == ResultState.Failure ||
                     result.ResultState == ResultState.Error);
         }

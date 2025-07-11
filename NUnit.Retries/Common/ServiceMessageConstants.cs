@@ -2,11 +2,7 @@
 {
     public static class ServiceMessageConstants
     {
-        public static string ServiceMessageOpen()
-        {
-            var result = TestContextExtensions.IsOnGitlab() ? "##gitlab[" : "##teamcity[";
-            return result;
-        }
+        public static string ServiceMessageOpen = CiServiceExtensions.GetCurrentService().GetMessageStartConstants();
         public const string ServiceMessageClose = "]";
     }
 }
