@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.Common
 {
     public static class ServiceMessageReplacements
     {

@@ -2,6 +2,7 @@
 
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
+using SkbKontur.NUnit.Retries.Common;
 
 namespace SkbKontur.NUnit.Retries.Gitlab
 {
@@ -23,8 +24,7 @@ namespace SkbKontur.NUnit.Retries.Gitlab
 
         public void OnTestFailed(TestExecutionContext context, DateTimeOffset start)
         {
-            context.WriteFailureForGitlab(start, TryCount);
+            context.WriteFailure(start, TryCount);
         }
     }
 }
-

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.Common
 {
     public static class ServiceMessageFormatter
     {
@@ -26,7 +26,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
             }
 
             var sb = new StringBuilder();
-            sb.Append(ServiceMessageConstants.ServiceMessageOpen);
+            sb.Append(ServiceMessageConstants.ServiceMessageOpen());
             sb.Append(messageName);
 
             foreach (var property in properties)

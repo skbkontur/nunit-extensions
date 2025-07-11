@@ -6,7 +6,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.Common
 {
     public static class TestContextExtensions
     {
@@ -15,7 +15,12 @@ namespace SkbKontur.NUnit.Retries.TeamCity
             return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION"));
         }
 
-        public static void WriteFailureForTeamCity(this TestExecutionContext context, DateTimeOffset start, int tryCount)
+        public static bool IsOnGitlab()
+        {
+            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("GITLAB_CI"));
+        }
+
+        public static void WriteFailure(this TestExecutionContext context, DateTimeOffset start, int tryCount)
         {
             var props = GetTestProperties(context.CurrentTest);
 
@@ -28,9 +33,9 @@ namespace SkbKontur.NUnit.Retries.TeamCity
         private static void TestStarted(this TextWriter writer, IDictionary<string, string> props, DateTimeOffset start)
         {
             writer.WriteLine(ServiceMessageFormatter.FormatMessage("testStarted", new Dictionary<string, string>(props)
-                {
-                    ["timestamp"] = $"{start:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
-                }));
+            {
+                ["timestamp"] = $"{start:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
+            }));
         }
 
         private static void TestStdOut(this TextWriter writer, IDictionary<string, string> props, string output, int attempt, int tryCount)

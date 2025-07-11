@@ -2,6 +2,7 @@
 
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
+using SkbKontur.NUnit.Retries.Common;
 
 namespace SkbKontur.NUnit.Retries.TeamCity
 {
@@ -23,7 +24,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
 
         public void OnTestFailed(TestExecutionContext context, DateTimeOffset start)
         {
-            context.WriteFailureForTeamCity(start, TryCount);
+            context.WriteFailure(start, TryCount);
         }
     }
 }
