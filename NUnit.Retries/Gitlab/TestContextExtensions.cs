@@ -89,3 +89,4 @@ namespace SkbKontur.NUnit.Retries.Gitlab
         }
     }
 }
+
