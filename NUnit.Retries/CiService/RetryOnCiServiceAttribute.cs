@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace SkbKontur.NUnit.Retries.CiService
 {
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]

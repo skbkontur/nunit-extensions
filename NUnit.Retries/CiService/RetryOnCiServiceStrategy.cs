@@ -13,7 +13,7 @@ namespace SkbKontur.NUnit.Retries.CiService
         }
 
         public int TryCount { get; }
-        
+
         public bool ShouldRetry(TestResult result)
         {
             return (CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab ||
