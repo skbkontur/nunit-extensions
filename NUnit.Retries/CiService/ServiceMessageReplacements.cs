@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace SkbKontur.NUnit.Retries.Common
+namespace SkbKontur.NUnit.Retries.CiService
 {
     public static class ServiceMessageReplacements
     {

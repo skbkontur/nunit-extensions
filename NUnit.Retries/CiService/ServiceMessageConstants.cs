@@ -1,4 +1,4 @@
-﻿namespace SkbKontur.NUnit.Retries.Common
+﻿namespace SkbKontur.NUnit.Retries.CiService
 {
     public static class ServiceMessageConstants
     {

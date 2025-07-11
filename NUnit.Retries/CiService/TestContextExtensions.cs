@@ -6,7 +6,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace SkbKontur.NUnit.Retries.Common
+namespace SkbKontur.NUnit.Retries.CiService
 {
     public static class TestContextExtensions
     {

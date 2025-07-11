@@ -3,22 +3,21 @@
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-using SkbKontur.NUnit.Retries.Common;
-
-namespace SkbKontur.NUnit.Retries.Gitlab
+namespace SkbKontur.NUnit.Retries.CiService
 {
-    public class RetryOnGitlabStrategy : IRetryStrategy
+    public class RetryOnCiServiceStrategy : IRetryStrategy
     {
-        public RetryOnGitlabStrategy(int tryCount)
+        public RetryOnCiServiceStrategy(int tryCount)
         {
             TryCount = tryCount;
         }
 
         public int TryCount { get; }
-
+        
         public bool ShouldRetry(TestResult result)
         {
-            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab &&
+            return (CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab ||
+                    CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity) &&
                    (result.ResultState == ResultState.Failure ||
                     result.ResultState == ResultState.Error);
         }

@@ -1,6 +1,6 @@
 using System;
 
-namespace SkbKontur.NUnit.Retries.Common
+namespace SkbKontur.NUnit.Retries.CiService
 {
     public static class CiServiceExtensions
     {
@@ -30,7 +30,7 @@ namespace SkbKontur.NUnit.Retries.Common
                 {
                     CiService.Gitlab => "##gitlab[",
                     CiService.TeamCity => "#teamcity[",
-                    _ => throw new NotSupportedException("Not supported")
+                    _ => throw new NotSupportedException("Not supported CI service")
                 };
         }
     }
