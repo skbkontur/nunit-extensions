@@ -85,9 +85,9 @@ namespace SkbKontur.NUnit.Retries.CiService
 
         private static string GetMessage(string messageName, Dictionary<string, string> properties)
         {
-            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity ? 
-                TeamcityMessageFormatter.FormatMessage(messageName, properties) : 
-                GitlabMessageFormatter.FormatMessage(messageName, properties);
+            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity ?
+                       TeamcityMessageFormatter.FormatMessage(messageName, properties) :
+                       GitlabMessageFormatter.FormatMessage(messageName, properties);
         }
     }
 }

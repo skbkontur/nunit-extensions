@@ -19,7 +19,7 @@ namespace SkbKontur.NUnit.Retries.CiService
             {
                 throw new ArgumentException("The message name must not be empty", nameof(messageName));
             }
-            
+
             if (ServiceMessageReplacements.Encode(messageName) != messageName)
             {
                 throw new ArgumentException("Message name contains illegal characters", nameof(messageName));

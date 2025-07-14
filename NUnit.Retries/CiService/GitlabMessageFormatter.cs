@@ -12,7 +12,7 @@ namespace SkbKontur.NUnit.Retries.CiService
             {
                 throw new ArgumentException("The message name must not be empty", nameof(messageName));
             }
-            
+
             var sb = new StringBuilder();
             sb.Append(messageName);
             foreach (var property in properties)
@@ -21,7 +21,7 @@ namespace SkbKontur.NUnit.Retries.CiService
                 {
                     throw new InvalidOperationException("The property name must not be empty");
                 }
-                
+
                 sb.AppendFormat(" {0}='{1}'", property.Key, property.Value);
             }
             return sb.ToString();
