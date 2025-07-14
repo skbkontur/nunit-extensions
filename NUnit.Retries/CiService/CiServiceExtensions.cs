@@ -23,15 +23,5 @@ namespace SkbKontur.NUnit.Retries.CiService
             }
             return CiService.Unknown;
         }
-
-        public static string GetMessageStartConstants(this CiService service)
-        {
-            return service switch
-                {
-                    CiService.Gitlab => "##gitlab[",
-                    CiService.TeamCity => "#teamcity[",
-                    _ => throw new NotSupportedException("Not supported CI service")
-                };
-        }
     }
 }
