@@ -6,16 +6,11 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.CiService
 {
     public static class TestContextExtensions
     {
-        public static bool IsOnTeamCity()
-        {
-            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION"));
-        }
-
-        public static void WriteFailureForTeamCity(this TestExecutionContext context, DateTimeOffset start, int tryCount)
+        public static void WriteFailure(this TestExecutionContext context, DateTimeOffset start, int tryCount)
         {
             var props = GetTestProperties(context.CurrentTest);
 
@@ -27,7 +22,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
 
         private static void TestStarted(this TextWriter writer, IDictionary<string, string> props, DateTimeOffset start)
         {
-            writer.WriteLine(ServiceMessageFormatter.FormatMessage("testStarted", new Dictionary<string, string>(props)
+            writer.WriteLine(GetMessage("testStarted", new Dictionary<string, string>(props)
                 {
                     ["timestamp"] = $"{start:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
                 }));
@@ -35,7 +30,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
 
         private static void TestStdOut(this TextWriter writer, IDictionary<string, string> props, string output, int attempt, int tryCount)
         {
-            writer.WriteLine(ServiceMessageFormatter.FormatMessage("testStdOut", new Dictionary<string, string>(props)
+            writer.WriteLine(GetMessage("testStdOut", new Dictionary<string, string>(props)
                 {
                     ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
                     ["out"] = $"Test failed on attempt {attempt}/{tryCount}, will retry\n\n" + output,
@@ -59,12 +54,12 @@ namespace SkbKontur.NUnit.Retries.TeamCity
                 testFailedProps["details"] = stackTrace;
             }
 
-            writer.WriteLine(ServiceMessageFormatter.FormatMessage("testFailed", testFailedProps));
+            writer.WriteLine(GetMessage("testFailed", testFailedProps));
         }
 
         private static void TestFinished(this TextWriter writer, IDictionary<string, string> props)
         {
-            writer.WriteLine(ServiceMessageFormatter.FormatMessage("testFinished", new Dictionary<string, string>(props)
+            writer.WriteLine(GetMessage("testFinished", new Dictionary<string, string>(props)
                 {
                     ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
                 }));
@@ -86,6 +81,13 @@ namespace SkbKontur.NUnit.Retries.TeamCity
                     ["id"] = Guid.NewGuid().ToString(),
                     ["flowId"] = Guid.NewGuid().ToString(),
                 };
+        }
+
+        private static string GetMessage(string messageName, Dictionary<string, string> properties)
+        {
+            return CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity ?
+                       TeamcityMessageFormatter.FormatMessage(messageName, properties) :
+                       GitlabMessageFormatter.FormatMessage(messageName, properties);
         }
     }
 }

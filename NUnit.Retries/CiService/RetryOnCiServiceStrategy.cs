@@ -3,11 +3,11 @@
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.CiService
 {
-    public class RetryOnTeamCityStrategy : IRetryStrategy
+    public class RetryOnCiServiceStrategy : IRetryStrategy
     {
-        public RetryOnTeamCityStrategy(int tryCount)
+        public RetryOnCiServiceStrategy(int tryCount)
         {
             TryCount = tryCount;
         }
@@ -16,14 +16,15 @@ namespace SkbKontur.NUnit.Retries.TeamCity
 
         public bool ShouldRetry(TestResult result)
         {
-            return TestContextExtensions.IsOnTeamCity() &&
+            return (CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab ||
+                    CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity) &&
                    (result.ResultState == ResultState.Failure ||
                     result.ResultState == ResultState.Error);
         }
 
         public void OnTestFailed(TestExecutionContext context, DateTimeOffset start)
         {
-            context.WriteFailureForTeamCity(start, TryCount);
+            context.WriteFailure(start, TryCount);
         }
     }
 }

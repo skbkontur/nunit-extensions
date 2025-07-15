@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SkbKontur.NUnit.Retries.TeamCity
+namespace SkbKontur.NUnit.Retries.CiService
 {
-    public static class ServiceMessageFormatter
+    public static class TeamcityMessageFormatter
     {
         /// <summary>
         ///     Serializes single value service message
@@ -26,7 +26,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
             }
 
             var sb = new StringBuilder();
-            sb.Append(ServiceMessageConstants.ServiceMessageOpen);
+            sb.Append(TeamcityMessageConstants.ServiceMessageOpen);
             sb.Append(messageName);
 
             foreach (var property in properties)
@@ -44,7 +44,7 @@ namespace SkbKontur.NUnit.Retries.TeamCity
                 sb.AppendFormat(" {0}='{1}'", property.Key, ServiceMessageReplacements.Encode(property.Value));
             }
 
-            sb.Append(ServiceMessageConstants.ServiceMessageClose);
+            sb.Append(TeamcityMessageConstants.ServiceMessageClose);
             return sb.ToString();
         }
     }
