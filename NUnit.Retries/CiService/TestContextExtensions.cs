@@ -42,9 +42,9 @@ namespace SkbKontur.NUnit.Retries.CiService
             var message = context.CurrentResult.Message;
             var stackTrace = context.CurrentResult.StackTrace;
             var testFailedProps = new Dictionary<string, string>(props)
-            {
-                ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
-            };
+                {
+                    ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
+                };
 
             if (message != null)
             {
