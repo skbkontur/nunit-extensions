@@ -63,9 +63,9 @@ namespace SkbKontur.NUnit.Retries.CiService
         private static void TestFinished(this TextWriter writer, IDictionary<string, string> props)
         {
             writer.WriteLine(GetMessage("testFinished", new Dictionary<string, string>(props)
-            {
-                ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
-            }));
+                {
+                    ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
+                }));
         }
 
         private static Dictionary<string, string> GetTestProperties(ITest test)
