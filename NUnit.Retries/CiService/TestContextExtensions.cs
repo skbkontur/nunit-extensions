@@ -16,7 +16,7 @@ namespace SkbKontur.NUnit.Retries.CiService
 
             TestContext.Progress.TestStarted(props, start);
             TestContext.Progress.TestStdOut(props, context.CurrentResult.Output, context.CurrentRepeatCount + 1, tryCount);
-            TestContext.Progress.TestFailed(props, context.CurrentResult.Message, context.CurrentResult.StackTrace);
+            TestContext.Progress.TestFailed(props, context);
             TestContext.Progress.TestFinished(props);
         }
 
@@ -37,12 +37,14 @@ namespace SkbKontur.NUnit.Retries.CiService
                 }));
         }
 
-        private static void TestFailed(this TextWriter writer, IDictionary<string, string> props, string? message, string? stackTrace)
+        private static void TestFailed(this TextWriter writer, IDictionary<string, string> props, TestExecutionContext context)
         {
+            var message = context.CurrentResult.Message;
+            var stackTrace = context.CurrentResult.StackTrace;
             var testFailedProps = new Dictionary<string, string>(props)
-                {
-                    ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
-                };
+            {
+                ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
+            };
 
             if (message != null)
             {
@@ -55,14 +57,15 @@ namespace SkbKontur.NUnit.Retries.CiService
             }
 
             writer.WriteLine(GetMessage("testFailed", testFailedProps));
+            context.CurrentResult.SetResult(ResultState.Warning);
         }
 
         private static void TestFinished(this TextWriter writer, IDictionary<string, string> props)
         {
             writer.WriteLine(GetMessage("testFinished", new Dictionary<string, string>(props)
-                {
-                    ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
-                }));
+            {
+                ["timestamp"] = $"{DateTimeOffset.UtcNow:yyyy-MM-dd'T'HH:mm:ss.fff}+0000",
+            }));
         }
 
         private static Dictionary<string, string> GetTestProperties(ITest test)
