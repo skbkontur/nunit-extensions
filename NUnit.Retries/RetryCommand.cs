@@ -3,6 +3,7 @@
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
 using NUnit.Framework.Interfaces;
+
 using SkbKontur.NUnit.Retries.CiService;
 
 namespace SkbKontur.NUnit.Retries

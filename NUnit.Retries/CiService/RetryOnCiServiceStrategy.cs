@@ -19,7 +19,7 @@ namespace SkbKontur.NUnit.Retries.CiService
             return (CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab ||
                     CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.TeamCity) &&
                    (result.ResultState == ResultState.Failure ||
-                    result.ResultState == ResultState.Error || 
+                    result.ResultState == ResultState.Error ||
                     result.ResultState == ResultState.Warning);
         }
 
