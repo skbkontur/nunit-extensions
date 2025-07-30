@@ -57,7 +57,6 @@ namespace SkbKontur.NUnit.Retries.CiService
             }
 
             writer.WriteLine(GetMessage("testFailed", testFailedProps));
-            context.CurrentResult.SetResult(ResultState.Warning, $"[Retried]\nTest error message:{message}, stackTrace: {stackTrace}");
         }
 
         private static void TestFinished(this TextWriter writer, IDictionary<string, string> props)
