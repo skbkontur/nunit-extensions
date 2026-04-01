@@ -16,7 +16,7 @@ namespace SkbKontur.NUnit.Retries.Muted
                 throw new ArgumentException($"Invalid 'until' format: {until}");
             }
 
-            const int maxDays = 30;
+            const int maxDays = 180;
             if ((this.until - DateTime.UtcNow).TotalDays > maxDays)
             {
                 throw new ArgumentException($"Muted until {this.until:u} exceeds max allowed period of {maxDays} days.");
