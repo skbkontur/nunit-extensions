@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
@@ -19,7 +21,7 @@ namespace SkbKontur.NUnit.Retries
         public override TestResult Execute(TestExecutionContext context)
         {
             var count = strategy.TryCount;
-            bool hasFailuresBeforeSuccess = false;
+            var failedAttempts = new List<string>();
             TestResult result = null;
 
             while (count-- > 0)
@@ -38,16 +40,16 @@ namespace SkbKontur.NUnit.Retries
                 if (context.CurrentResult.ResultState == ResultState.Success)
                 {
                     result = context.CurrentResult;
-                    if (hasFailuresBeforeSuccess && CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab)
+                    if (failedAttempts.Count > 0 && CiServiceExtensions.GetCurrentService() == CiServiceExtensions.CiService.Gitlab)
                     {
-                        result.SetResult(
-                            ResultState.Warning
-                        );
+                        var attempts = failedAttempts.Count + 1;
+                        context.CurrentTest.Properties.Set("Retries.Attempts", attempts);
+                        result.SetResult(ResultState.Warning, FormatRetriedMessage(attempts, failedAttempts));
                     }
                     break;
                 }
 
-                hasFailuresBeforeSuccess = true;
+                failedAttempts.Add(FormatFailedAttempt(failedAttempts.Count + 1, context.CurrentResult));
 
                 if (count <= 0 || !strategy.ShouldRetry(context.CurrentResult))
                 {
@@ -63,6 +65,25 @@ namespace SkbKontur.NUnit.Retries
             return result;
         }
 
+        private string FormatRetriedMessage(int attempts, List<string> failedAttempts)
+        {
+            var message = new StringBuilder();
+            message.Append($"[Retried] Passed on attempt {attempts}/{strategy.TryCount}.");
+
+            foreach (var failedAttempt in failedAttempts)
+            {
+                message.AppendLine();
+                message.Append(failedAttempt);
+            }
+
+            return message.ToString();
+        }
+
+        private static string FormatFailedAttempt(int attempt, TestResult result)
+        {
+            return $"Attempt {attempt} failed: {result.Message}, stackTrace: {result.StackTrace}";
+        }
+        
         private readonly IRetryStrategy strategy;
     }
 }
