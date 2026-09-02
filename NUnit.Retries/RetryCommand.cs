@@ -83,7 +83,7 @@ namespace SkbKontur.NUnit.Retries
         {
             return $"Attempt {attempt} failed: {result.Message}, stackTrace: {result.StackTrace}";
         }
-        
+
         private readonly IRetryStrategy strategy;
     }
 }
